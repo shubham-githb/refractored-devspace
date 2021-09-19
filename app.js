@@ -5,6 +5,7 @@ const middleware = require('./middleware')
 const path = require('path')
 const bodyParser = require("body-parser")
 const mongoose = require("./database")
+const session = require("express-session")
 
 // mongoose.connect("mongodb+srv://admin:Sk@961969@twitterclonecluster.a8lzi.mongodb.net/TwitterCloneDB?retryWrites=true&w=majority")
 // .then(()=>{
