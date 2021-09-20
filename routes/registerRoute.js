@@ -46,13 +46,12 @@ router.post("/", async (req, res, next) => {
             
 
             User.create(data)
-            .then(()=>{
+            .then((user)=>{
                 // console.log("hello")
-                console.log(data);
-                console.log(user)
-            })
+                req.session.user=user;
+                return res.redirect("/");
 
-            console.log("hello")
+            })
 
         }
         else {
