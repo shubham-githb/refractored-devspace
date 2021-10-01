@@ -1,19 +1,17 @@
-doctype html
+<!DOCTYPE html>
 html(lang="en")
     head
         meta(charset="UTF-8")
-        meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         title #{pageTitle}
         link(rel='stylesheet', href='https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css', integrity='sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh', crossorigin='anonymous')
-        link(rel="stylesheet", href="css/main.css")
-
-    body 
-        .wrapper 
-            .row 
-                nav.col-2.col-md-5
+        link(rel="stylesheet", href="/css/main.css")
+    body
+        .wrapper
+            .row
+                nav.col-2
                     a.blue(href="/")
-                        i.fas.fa-code-branch
+                        i.fas.fa-rocket 
                     a(href="/")
                         i.fas.fa-home
                     a(href="/search")
@@ -21,18 +19,19 @@ html(lang="en")
                     a(href="/notifications")
                         i.fas.fa-bell
                     a(href="/messages")
-                        i.fas.fa-envelope-square
+                        i.fas.fa-envelope
                     a(href="/profile")
-                        i.fas.fa-user-friends
+                        i.fas.fa-user
                     a(href="/logout")
-                        i.fas.fa-door-open
-                    
-                .mainSectionContainer.col-8.col-md-5.col-lg-6
+                        i.fas.fa-sign-out-alt
+                .mainSectionContainer.col-10.col-md-8.col-lg-6
+                    .titleContainer
+                        h1 #{pageTitle}
+                        
                     block content
-                .d-none.d-md-block.col-md-2.col-lg-4
-                    span column
 
-        //- block content
+                .d-none.d-md-block.col-md-2.col-lg-4
+                    span third column
 
         script(src='https://kit.fontawesome.com/ff128f4669.js' crossorigin='anonymous')
         script(src='https://code.jquery.com/jquery-3.6.0.min.js', integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=', crossorigin='anonymous')
