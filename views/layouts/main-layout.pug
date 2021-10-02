@@ -1,3 +1,5 @@
+include ../mixins/mixins
+
 <!DOCTYPE html>
 html(lang="en")
     head
@@ -11,7 +13,7 @@ html(lang="en")
             .row
                 nav.col-2
                     a.blue(href="/")
-                        i.fas.fa-rocket 
+                        i.fas.fa-rocket
                     a(href="/")
                         i.fas.fa-home
                     a(href="/search")
@@ -27,11 +29,12 @@ html(lang="en")
                 .mainSectionContainer.col-10.col-md-8.col-lg-6
                     .titleContainer
                         h1 #{pageTitle}
-                        
+
                     block content
 
                 .d-none.d-md-block.col-md-2.col-lg-4
                     span third column
+
 
         script(src='https://kit.fontawesome.com/ff128f4669.js' crossorigin='anonymous')
         script(src='https://code.jquery.com/jquery-3.6.0.min.js', integrity='sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=', crossorigin='anonymous')
