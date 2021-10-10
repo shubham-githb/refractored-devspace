@@ -11,7 +11,7 @@ $("#postTextarea").keyup(event => {
         return;
     }
 
-    submitButton.prop("disabled", false);
+    submitButton.prop("disabled", false); 
 })
 
 $("#submitPostButton").click(() => {
@@ -22,7 +22,7 @@ $("#submitPostButton").click(() => {
         content: textbox.val()
     }
 
-    $.post("/api/posts", data, postData => {
+    $.post("/api/posts", data, (postData) => {
         
         var html = createPostHtml(postData);
         $(".postsContainer").prepend(html);
@@ -32,5 +32,29 @@ $("#submitPostButton").click(() => {
 })
 
 function createPostHtml(postData) {
-    return postData.content;
+    
+    var postedBy = postData.postedBy;
+    var displayName = postedBy.firstName + " " + postedBy.lastName;
+    var timestamp = postData.createdAt;
+
+    return `<div class='post'>
+
+                <div class='mainContentContainer'>
+                    <div class='userImageContainer'>
+                        <img src='${postedBy.profilePic}'>
+                    </div>
+                    <div class='postContentContainer'>
+                        <div class='header'>
+                            <a href='/profile/${postedBy.username}'>${displayName}</a>
+                            <span class='username'>@${postedBy.username}</span>
+                            <span class='date'>${timestamp}</span>
+                        </div>
+                        <div class='postBody'>
+                            <span>${postData.content}</span>
+                        </div>
+                        <div class='postFooter'>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
 }
