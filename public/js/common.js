@@ -33,8 +33,32 @@ $("#submitPostButton").click(() => {
 
 
 $(document).on("click",".likeButton",()=>{
-    alert("button clicked")
+    var button = $(event.target);
+    var postId = getPostIdFromEelement(button);
+    console.log(postId)
+    if(postId===undefined) return;
+
+    $.ajax({
+        url: '/api/posts',
+        type: 'PUT',
+        success: function(postData) {
+            // Do something with the result
+            console.log(postData)
+
+        }
+    });
+     
 })
+
+function getPostIdFromEelement(element){
+    var isRoot =  element.hasClass(".post");
+    var rootElement = isRoot == true ? element : element.closest(".post");
+    var postId = rootElement.data().id;
+
+    return postId;
+
+
+}
 
 function createPostHtml(postData) {
     
@@ -47,7 +71,7 @@ function createPostHtml(postData) {
     var displayName = postedBy.firstName + " " + postedBy.lastName;
     var timestamp = timeDifference(new Date(), new Date(postData.createdAt));
 
-    return `<div class='post'>
+    return `<div class='post' data-id='${postData._id}'>
 
                 <div class='mainContentContainer'>
                     <div class='userImageContainer'>
