@@ -31,33 +31,30 @@ $("#submitPostButton").click(() => {
     })
 })
 
-
-$(document).on("click",".likeButton",()=>{
+$(document).on("click", ".likeButton", (event) => {
     var button = $(event.target);
-    var postId = getPostIdFromEelement(button);
-    console.log(postId)
-    if(postId===undefined) return;
+    var postId = getPostIdFromElement(button);
+    
+    if(postId === undefined) return;
 
     $.ajax({
-        url: '/api/posts',
-        type: 'PUT',
-        success: function(postData) {
-            // Do something with the result
-            console.log(postData)
-
+        url: `/api/posts/${postId}/like`,
+        type: "PUT",
+        success: (postData) => {
+            console.log(postData);
         }
-    });
-     
+    })
+
 })
 
-function getPostIdFromEelement(element){
-    var isRoot =  element.hasClass(".post");
+function getPostIdFromElement(element) {
+    var isRoot = element.hasClass("post");
     var rootElement = isRoot == true ? element : element.closest(".post");
     var postId = rootElement.data().id;
 
+    if(postId === undefined) return alert("Post id undefined");
+
     return postId;
-
-
 }
 
 function createPostHtml(postData) {
@@ -98,7 +95,7 @@ function createPostHtml(postData) {
                                 </button>
                             </div>
                             <div class='postButtonContainer'>
-                                <button class = 'likeButton'>
+                                <button class='likeButton'>
                                     <i class='far fa-heart'></i>
                                 </button>
                             </div>
