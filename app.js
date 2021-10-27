@@ -9,12 +9,19 @@ const session = require("express-session");
 
 const server = app.listen(port, () => console.log("Server listening on port " + port));
 
+
+// setting template engine
 app.set("view engine", "pug");
 app.set("views", "views");
 
+
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// serve static files such as images, CSS files, and JavaScript files,
 app.use(express.static(path.join(__dirname, "public")));
 
+
+//  session and cookie-parser middleware in place
 app.use(session({
     secret: "bbq chips",
     resave: true,
@@ -35,6 +42,7 @@ app.use("/logout",logoutRoute)
 
 app.use("/api/posts", postsApiRoute);
 
+// it creates a new session for the user and assigns them a cookie. Next time the user comes, the cookie is checked and the page_view session variable is updated accordingly.
 app.get("/", middleware.requireLogin, (req, res, next) => {
 
     var payload = {

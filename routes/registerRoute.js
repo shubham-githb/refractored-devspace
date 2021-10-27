@@ -15,17 +15,25 @@ router.get("/", (req, res, next) => {
     res.status(200).render("register");
 })
 
+
 router.post("/", async (req, res, next) => {
 
+    //getting firstname of the user
     var firstName = req.body.firstName.trim();
+      //getting Lastname of the user
     var lastName = req.body.lastName.trim();
+      //getting username of the user
     var username = req.body.username.trim();
+      //getting email of the user
     var email = req.body.email.trim();
+      //getting password of the user
     var password = req.body.password;
 
     var payload = req.body;
 
+
     if(firstName && lastName && username && email && password) {
+        // find one document according to the condition. If multiple documents match the condition, then return the first document satisfying the condition
         var user = await User.findOne({
             $or: [
                 { username: username },
@@ -41,8 +49,9 @@ router.post("/", async (req, res, next) => {
         if(user == null) {
             // No user found
             var data = req.body;
+            // password hashing
             data.password = await bcrypt.hash(password, 10);
-
+            //create User
             User.create(data)
             .then((user) => {
                 req.session.user = user;

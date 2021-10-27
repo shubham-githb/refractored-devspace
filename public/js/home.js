@@ -1,9 +1,13 @@
+// will only run once the page DOM is ready .
+
+// / A $( document ).ready() block.
 $(document).ready(() => {
     $.get("/api/posts", results => {
         outputPosts(results, $(".postsContainer"));
     })
 })
 
+// Each time the page is loaded , show the history of all the posts and append it
 function outputPosts(results, container) {
     container.html("");
 
