@@ -1,42 +1,56 @@
+// Using jquery keyup method . 
+// It triggers the keyup event, or attaches a function to run when a keyup event occurs.
 $("#postTextarea").keyup(event => {
+    // returns DOM element triggering the event
     var textbox = $(event.target);
+    // trim() method removes whitespace from both sides of a string. 
     var value = textbox.val().trim();
-    
+    // getting element by id
     var submitButton = $("#submitPostButton");
 
     if(submitButton.length == 0) return alert("No submit button found");
-
+    // if the value is null.Then do not activate the post button
     if (value == "") {
         submitButton.prop("disabled", true);
         return;
     }
-
+    // else if there are contents found in the textbox, fire up the post button
     submitButton.prop("disabled", false);
 })
 
+//This will get execute when the button is clicked
 $("#submitPostButton").click(() => {
+    // returns DOM element triggering the event
     var button = $(event.target);
     var textbox = $("#postTextarea");
-
+    // creating a data objext 
     var data = {
         content: textbox.val()
     }
 
+    //The $.post() method loads data from the server using a HTTP POST request.
+    // sending post request to REST API for fetching posts.
     $.post("/api/posts", data, postData => {
-        
+        // triggering function to create post content and to append it on the page
         var html = createPostHtml(postData);
+        // inserts the specified content as the first child of each element in the jQuery collection
         $(".postsContainer").prepend(html);
+        //empty the values in textbox 
         textbox.val("");
+        //disable the button
         button.prop("disabled", true);
     })
 })
 
+// this
 $(document).on("click", ".likeButton", (event) => {
+    // returns DOM element triggering the event
     var button = $(event.target);
+    //triggering the function which will return the id of the particular post
     var postId = getPostIdFromElement(button);
     
     if(postId === undefined) return;
-
+    // Sending PUT request to REST API for updaing the value of the like array
     $.ajax({
         url: `/api/posts/${postId}/like`,
         type: "PUT",
@@ -48,26 +62,31 @@ $(document).on("click", ".likeButton", (event) => {
 })
 
 function getPostIdFromElement(element) {
+    // hasClass() method will return true if the class is assigned to an element, even if other classes also are.
     var isRoot = element.hasClass("post");
-    var rootElement = isRoot == true ? element : element.closest(".post");
-    var postId = rootElement.data().id;
 
+    // getting the id of the post
+    var postId = rootElement.data().id;
+    
     if(postId === undefined) return alert("Post id undefined");
 
     return postId;
 }
 
+// Function to create Html Post
 function createPostHtml(postData) {
     
+
     var postedBy = postData.postedBy;
 
     if(postedBy._id === undefined) {
         return console.log("User object not populated");
     }
-
+    // displaying the author name 
     var displayName = postedBy.firstName + " " + postedBy.lastName;
+    // displaying time stamp
     var timestamp = timeDifference(new Date(), new Date(postData.createdAt));
-
+    // creating html for appending the content 
     return `<div class='post' data-id='${postData._id}'>
 
                 <div class='mainContentContainer'>
@@ -105,6 +124,8 @@ function createPostHtml(postData) {
             </div>`;
 }
 
+
+// Function to show time difference from the time of post creation
 function timeDifference(current, previous) {
 
     var msPerMinute = 60 * 1000;
