@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 router.get("/", (req, res, next) => {
     if(req.session){
+        // Once Logged Out destroy the session and redirect the user to the loginPage
         req.session.destroy(()=>{
             res.redirect("/login")
         })
