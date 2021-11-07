@@ -55,6 +55,11 @@ button {
   border: azure;
 }
 
+button i,
+button span {
+  pointer-events: none;
+}
+
 nav a {
   padding: 10px;
   font-size: 20px;

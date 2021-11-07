@@ -56,7 +56,9 @@ $(document).on("click", ".likeButton", (event) => {
         type: "PUT",
         success: (post1) => {
             
-            button.find("span").text(post1.likes.length || "");
+            button.find("span").text(post1.likes.length || ""); 
+            
+
 
         }
     })
@@ -64,12 +66,10 @@ $(document).on("click", ".likeButton", (event) => {
 })
 
 function getPostIdFromElement(element) {
-    // hasClass() method will return true if the class is assigned to an element, even if other classes also are.
     var isRoot = element.hasClass("post");
-
-    // getting the id of the post
+    var rootElement = isRoot == true ? element : element.closest(".post");
     var postId = rootElement.data().id;
-    
+
     if(postId === undefined) return alert("Post id undefined");
 
     return postId;
