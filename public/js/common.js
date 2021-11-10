@@ -65,6 +65,30 @@ $(document).on("click", ".likeButton", (event) => {
 
 })
 
+$(document).on("click", ".retweetButton ", (event) => {
+    // returns DOM element triggering the event
+    var button = $(event.target);
+    //triggering the function which will return the id of the particular post
+    var postId = getPostIdFromElement(button);
+    
+    if(postId === undefined) return;
+    // Sending PUT request to REST API for updaing the value of the like array
+    $.ajax({
+        url: `/api/posts/${postId}/retweet`,
+        type: "POST",
+        success: (post1) => {
+            console.log(post1);
+            
+            // button.find("span").text(post1.likes.length || ""); 
+            
+
+
+        }
+    })
+
+})
+
+
 function getPostIdFromElement(element) {
     var isRoot = element.hasClass("post");
     var rootElement = isRoot == true ? element : element.closest(".post");
@@ -110,7 +134,7 @@ function createPostHtml(postData) {
                                     <i class='far fa-comment'></i>
                                 </button>
                             </div>
-                            <div class='postButtonContainer'>
+                            <div class='retweetButton'>
                                 <button>
                                     <i class='fas fa-retweet'></i>
                                 </button>
