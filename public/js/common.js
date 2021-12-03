@@ -78,11 +78,7 @@ $(document).on("click", ".retweetButton ", (event) => {
         type: "POST",
         success: (post1) => {
             console.log(post1);
-            
             // button.find("span").text(post1.likes.length || ""); 
-            
-
-
         }
     })
 

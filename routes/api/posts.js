@@ -96,19 +96,29 @@ router.put("/:id/like", async (req, res, next) => {
 router.post("/:id/retweet", async (req, res, next) => {
     // return res.status(200).send("Its working")
 
+    // return res.status(200).send("Working.....")
     
 
     // getting the post id from the params
     var postId = req.params.id;
     // getting the user id from the session
-    var userId = req.session.user._id;
+    var userId = req.session.user.id;
 
     //  returns true if a string contains a specified string, otherwise false .
-    var isLiked = req.session.user.likes && req.session.user.likes.includes(postId);
+    // try and delete retweet;
+
+    var deletePost = await Post.findOneAndDelete({postedBy:userId , retweetData : postId}) 
+    .catch(error => {
+        console.log(error);
+        res.sendStatus(400);
+    })
+
 
     //using pull to remove an element from collection  if isLiked returns false and addToSet to add the element in Likes array 
     // adds a value to an array unless the value is already present
-    var option = isLiked ? "$pull" : "$addToSet";
+    var option = deletePost != null ? "$pull" : "$addToSet";
+
+    return res.status(200).send(option);
 
     // Insert user like
     req.session.user = await User.findByIdAndUpdate(userId, { [option]: { likes: postId } }, { new: true})
